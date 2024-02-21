@@ -1,7 +1,9 @@
 <?php
-
+use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('register', [RegisterController::class,'register']);
+Route::post('register',[RegisterController::class,'register']);
 Route::post('login', [RegisterController::class,'login']);
 
 Route::group(['middleware'=>'auth:sanctum'],function(){
