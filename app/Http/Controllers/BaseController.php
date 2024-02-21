@@ -28,7 +28,7 @@ class BaseController extends Controller
      * 
      */
 
-     public function sendError($error,$errorMessage=[], $code=404){
+     public function sendError($error,$errorMessages=[], $code=404){
         $response=[
             'success'=>false,
             'message'=>$error,
@@ -36,10 +36,15 @@ class BaseController extends Controller
         ];
        
         if(!empty($errorMessage)){
-            $response['data']=>$errorMessage;
+            $response['data'] = $errorMessages;
         }
         return response()->json($response, $code);
 
      }
 
 }
+
+
+
+
+// ndjandj
