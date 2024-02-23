@@ -2,10 +2,45 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\BaseController as BaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Validator;
 
-class ProductController extends Controller
+class ProductController extends BaseController
 {
-    //
+
+
+    // index function to fetch all data
+public function index(){
+
+    $products = Product::all();
+
+    // return $this->sendResponse($products->toArray(),'Products Retrived');
+
+    return $this->sendResponse(ProductResource::collection($products),'Product Retrived');
+}
+
+
+// store function to store data of product
+
+public function store(Request $request){
+
+    $validator = Validator::make($request->all(),[
+        'name'       =>'required',
+        'description'=> 'required',
+    ]);
+
+    if ($validator->fails())
+    {
+        return $this->sendError('validation Error', $validator->errors());
+    }
+
+    $products= Product::create($request->all());
+    return $this->sendResponse(new ProductResource($products),'Product Created Successfully');
+}
+
+
 }
