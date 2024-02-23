@@ -43,4 +43,35 @@ public function store(Request $request){
 }
 
 
+// show function
+
+public function show($id)
+{
+    $products = Product::find($id);
+    if(is_null($products)){
+        return $this->sendError('Product not found');
+    }
+
+    return $this->sendResponse(new ProductResource($products), 'Product retrived');
+}
+
+
+// update product
+
+public function update(Request $request, Product $product)
+{
+    $validator = Validator::make($request->all(),[
+        'name'       =>'required',
+        'description'=> 'required',
+    ]);
+
+    if ($validator->fails())
+    {
+        return $this->sendError('validation Error', $validator->errors());
+    }
+
+    $product->update($request->all());
+
+    return $this->sendResponse(new ProductResource($product),'Product Updated');
+}
 }
