@@ -61,7 +61,7 @@ public function show($id)
 public function update(Request $request, Product $product)
 {
     $validator = Validator::make($request->all(),[
-        'name'       =>'required',
+        'name'       => 'required',
         'description'=> 'required',
     ]);
 
@@ -73,5 +73,10 @@ public function update(Request $request, Product $product)
     $product->update($request->all());
 
     return $this->sendResponse(new ProductResource($product),'Product Updated');
+}
+
+public function destroy(Product $product){
+    $product->delete();
+    return $this->sendResponse(new ProductResource($product),'Product destroyed');
 }
 }

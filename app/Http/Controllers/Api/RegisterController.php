@@ -13,6 +13,8 @@ use Auth;
 class RegisterController extends BaseController
 {
 
+
+    // function for registration
     public function register(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -43,6 +45,9 @@ class RegisterController extends BaseController
         return $this->sendResponse($success, 'user registerd successful');
     }
 
+
+
+    //  function for login
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
 
@@ -62,7 +67,18 @@ class RegisterController extends BaseController
 
         }
         else{
+
             return $this->sendError('Unauthorized', ['error'=>'Unrauthorized']);
         }
     }
+
+
+    //logout function
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return $this->sendResponse([],'User logged out');
+    }
+
 }
